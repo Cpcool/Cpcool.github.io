@@ -5,12 +5,28 @@
     <meta charset="UTF-8">
     <title> chat </title>
     <link rel="stylesheet" href="https://cloudchat-test.azymcloud.com/public/stylesheets/visitor.css">
+    <!-- Matomo -->
+    <script type="text/javascript">
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "//cloudchat-test.azymcloud.com/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '23']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
+
 </head>
 
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
     <script src="https://cloudchat-test.azymcloud.com/public/javascripts/visitor.js"></script>
-    <script>azym_chat('1')</script>
+    <script>azym_chat('23')</script>
 </body>
 
 </html>
