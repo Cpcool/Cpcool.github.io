@@ -18,6 +18,10 @@ document.body.insertAdjacentHTML(
         <img onclick='closeChat()' src="${adminPath}img/Close.svg">
         </div>
     </div>
+    <div class="co-browsing">
+        <p>Share this code with admin <mark id="SessionKey"></mark></p>
+    </div>
+    <p id="RemoteStatus">Screen Share Disconnected</p>
 <div class="chat-section-remove" id="chat-section-remove">
 <div id="visitorRating" style="display:none">
     <div class="visitorIcon">
@@ -55,24 +59,30 @@ document.body.insertAdjacentHTML(
 </div>
     <div id="online-chat">
     <div id="chat-messages" class="client-chat">
-        <div class="chat-admin">
-            <span class="User">
-                <img src="https://cloudchat-test.azymcloud.com/public/img/user.svg">
-            </span>
-            <div class="User-title">
-                <span class="title">Admin</span>
-                 <div class="messagesPanel">
-                <span class="messages">
-                Welcome to Help Desk ! </br>
-                How may I help you ?
-                </span>
+        <ul id="msgList-client">
+            <li>
+                <div class="chat-admin">
+                    <span class="User">
+                        <img src="https://cloudchat-test.azymcloud.com/public/img/user.svg">
+                    </span>
+                    <div class="User-title">
+                        <span class="title">Admin</span>
+                         <div class="messagesPanel">
+                        <span class="messages">
+                        Welcome to Help Desk ! </br>
+                        How may I help you ?
+                        </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div id="azym-visitor-parent" class="username">
-            <input type="text" name="username" id="azym-visitor" autocomplete="text" placeholder="Your name*">
-            <button onclick="visitorName()" type="button">Start Chat !</button>
-        </div>
+            </li>
+            <li>
+                <div id="azym-visitor-parent" class="username">
+                    <input type="text" name="username" id="azym-visitor" autocomplete="text" placeholder="Your name*">
+                    <button onclick="visitorName()" type="button">Start Chat !</button>
+                </div>
+            <li>
+        </ul>
     </div>
     
     <div class="messages-box" id="message-box-azym">
@@ -82,23 +92,18 @@ document.body.insertAdjacentHTML(
                 <img src="https://cloudchat-test.azymcloud.com/public/img/send.svg">
             </button>
             <button onclick="showCobrowsingInput()">
-                <img src="https://cloudchat-test.azymcloud.com/public/img/share.svg" title="start screen share">
+                <img src="https://cloudchat-test.azymcloud.com/public/img/screen-share.png" title="start screen share">
             </button>
             <button onclick="stopSharing()">
-                <img src="https://cloudchat-test.azymcloud.com/public/img/no-stopping.svg" title="Stop">
+                <img src="https://cloudchat-test.azymcloud.com/public/img/Stop-Screen-Share.png" title="Stop">
             </button>
         </div>
     </div>
     </div>
 </div>
-<div class="co-browsing">
-    <span id="RemoteStatus">Disconnected</span>
-    <input id="SessionKey" placeholder="Enter your secret key" disabled>
-    <button id="BtnSessionKey" onclick="CreateSession()">Start</button>
-</div>
 </div>
 
-<div class="circleChatButtonWrap" onclick="openChat()">
+<div class="circleChatButtonWrap" onclick="openChat()" id="circuleChatButton">
     <div class="circleChatBubble">
         <img class="hover" src="https://cloudchat-test.azymcloud.com/public/img/edit.svg">
         <img src="https://cloudchat-test.azymcloud.com/public/img/menu.svg">
@@ -108,7 +113,6 @@ document.body.insertAdjacentHTML(
 Thanks for your feedback !
 </div>
 <div class="screen-share">
-    <video src="" id="video" style="width:700px; height: 350px;opacity: 0" autoplay="true"></video>
     <canvas style="display:none;" id="preview"></canvas>
     <div id="logger"></div>
 </div>`
@@ -124,8 +128,11 @@ var video = document.getElementById("video");
 var streamObj;
 
 function showCobrowsingInput() {
-    $('#SessionKey').val(Math.floor(100000 + Math.random() * 900000));
+    const appCode = Math.floor(100000 + Math.random() * 900000);
+    $('#SessionKey').html(appCode);
+    CreateSession(appCode);
     $('.co-browsing').show();
+    $('#SessionKey').show('slow');
 }
 
 document.getElementById('message-box-visitor').addEventListener('keypress', function (e) {
@@ -148,7 +155,7 @@ function azym_chat(appId) {
     let chatId = myStorage.getItem("chatID");
 
     // initializing socket connection
-    socket = io.connect(socketUrl,{ transports: ['polling'] });
+    socket = io.connect(socketUrl, {transports:['websocket']);
     let vName = myStorage.getItem('azym-visitor-name') || "Annonymous";
 
     socket.on("connect", () => {
@@ -159,6 +166,11 @@ function azym_chat(appId) {
         });
 
         socket.on("authenticated", function () {
+            //check initial name
+            if (myStorage.getItem('azym-visitor-name')) {
+                let visitorName = myStorage.getItem('azym-visitor-name')
+                socket.emit('visitorName', visitorName)
+            }
             console.log("connected visitor");
         });
     });
@@ -218,11 +230,11 @@ function azym_chat(appId) {
         // New message events
         socket.on("new_message", data => {
             console.log('new message arrived ', data);
-            let node = document.getElementById('chat-messages');
+            let node = document.getElementById('msgList-client');
             if (data.role == "visitor") {
                 addMessage(data.message)
             } else {
-                node.innerHTML += `<div class="chat-admin">
+                node.innerHTML += `<li><div class="chat-admin">
                     <span class="User">
                         <img src="https://cloudchat-test.azymcloud.com/public/img/user.svg">
                     </span>
@@ -234,9 +246,10 @@ function azym_chat(appId) {
                         </span>
                         </div>
                     </div>
-                    </div>`
+                    </div></li>`
             }
             openChat();
+            animateMessageDiv();
 
             // saving chat history to localstorage
             let history = JSON.parse(myStorage.getItem("history"));
@@ -250,18 +263,26 @@ function azym_chat(appId) {
 function addMessage() {
     let message = document.getElementById('message-box-visitor').value
     if (message) {
-        document.getElementById('message-box-visitor').value = ''
-        let node = document.getElementById('chat-messages')
-        node.innerHTML += ` <div class="subadmin">
+        document.getElementById('message-box-visitor').value = '';
+        let node = document.getElementById('msgList-client');
+        node.innerHTML += ` <li><div class="subadmin">
                             <div class="messagesPanel">
                             <span class="messages">${message}</span>
                             </div>
                             <span class="User">
                 <img src="https://cloudchat-test.azymcloud.com/public/img/user-icon.svg">
             </span>
-                        </div>`
+                        </div></li>`;
         socket.emit("new_message", { message: message });
+        animateMessageDiv();
     }
+}
+
+function animateMessageDiv() {
+    const messageList = $('#msgList-client');
+    $("#chat-messages").animate({
+        scrollTop: messageList[0].offsetHeight
+    });
 }
 
 // binding send and enter button to send messages
@@ -393,7 +414,11 @@ function closeChat() {
     else
         document.getElementById('rating-text-heading').innerHTML = 'Please rate your customer service experience :'
     document.getElementById('visitorRating').style.display = 'block'
-    document.getElementById('online-chat').style.display = 'none'
+    changeSessionUI()
+}
+
+function changeSessionUI() {
+    document.getElementById('online-chat').style.display = 'none';
     document.getElementById('chat-contact-form').style.display = 'none'
 }
 
@@ -425,20 +450,21 @@ if (myStorage.getItem('color')) {
 }
 
 // add events for visitor ratings emoji's
-let elements = document.getElementsByClassName('visitorRating')
+let elements = document.getElementsByClassName('visitorRating');
 for (var i = 0; i < elements.length; i++) {
     elements[i].addEventListener('click', myFunction, false);
 }
 
 function myFunction(e) {
+    console.log('my function is calling..........');
     myStorage.setItem('rating', true)
     minimizeChat()
     document.getElementById('thank-you-feedback').style.display = 'block'
     setTimeout(() => { document.getElementById('thank-you-feedback').style.display = 'none' }, 1000)
     if (myStorage.getItem('offline') == 'true')
-        socket.emit('azymRatings', this.value)
+        socket.emit('azymRatings', this.value);
     else
-        socket.emit('ratings', this.value)
+        socket.emit('ratings', this.value);
     document.getElementById('visitorRating').style.display = 'none'
 }
 
