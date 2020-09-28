@@ -1,6 +1,6 @@
 let myStorage = localStorage;
 let socket = null;
-let socketUrl = "//azym-chatbackend-busgqe7kbq-uc.a.run.app";
+let socketUrl = "https://azym-chatbackend-busgqe7kbq-uc.a.run.app";
 let appId = null;
 const adminPath = 'https://cloudchat-test.azymcloud.com/public/';
 
