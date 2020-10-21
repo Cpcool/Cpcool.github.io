@@ -598,7 +598,7 @@ function openChat() {
     }
     document.getElementById('visitorRating').style.display = 'none'
     document.getElementById('chat-section').style.display = 'block'
-    document.getElementsByClassName('circleChatButtonWrap')[0].style.display = 'none'
+    //document.getElementsByClassName('circleChatButtonWrap')[0].style.display = 'none'
 }
 
 //******************************************************************
