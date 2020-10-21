@@ -397,7 +397,7 @@ function azym_chat(appId) {
             if (data.role == "visitor") {
                 addMessage(data.message)
             } else {
-                let adminImage = adminPath + data.image
+                let adminImage = adminPath + '/' + data.image
                 node.innerHTML += `<li><div class="chat-admin">
                     <span class="User">
                         <img src="${adminImage}" >
