@@ -679,7 +679,7 @@ function showAdmins(type) {
       let profile = (admin.profilePicture) ? admin.profilePicture : 'public/img/user.svg'
       profile = adminPath + '/' + profile
       let connect = (type === "phone") ? (admin['countryCallingCode'] + admin['phone']) : "connect"
-      li.innerHTML = `<div><span><img class="admin-profile-azym" src='${profile}' /></span><span>${admin.name}</span><a href='${link}'>${connect}</a></div>`
+      li.innerHTML = `<div><span><img class="admin-profile-azym" src='${profile}' onerror="onErrorProfile()" /></span><span>${admin.name}</span><a href='${link}'>${connect}</a></div>`
       ul.appendChild(li)
     }
   }
@@ -703,4 +703,9 @@ function showAdmins(type) {
   adList.style.display = 'block'
   adminShowing = true
   $("#azym-admin-list .headerlist").append('<span class="close-detailbox">&times;</span>')
+}
+
+function onErrorProfile() {
+  this.src = "https://cloudchat.azymcloud.com/public/img/user.svg"
+  return
 }
