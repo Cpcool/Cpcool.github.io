@@ -679,7 +679,7 @@ function showAdmins(type) {
       let profile = (admin.profilePicture) ? admin.profilePicture : 'public/img/user.svg'
       profile = adminPath + '/' + profile
       let connect = (type === "phone") ? (admin['countryCallingCode'] + admin['phone']) : "connect"
-      li.innerHTML = `<div><span><img class="admin-profile-azym" src='${profile}' onerror="this.onerror=null;this.src='http://example.com/existent-image.jpg'";/></span><span>${admin.name}</span><a href='${link}'>${connect}</a></div>`
+      li.innerHTML = `<div><span><img class="admin-profile-azym" src='${profile}' onerror="this.onerror=null;this.src='https://cloudchat.azymcloud.com/public/img/user.svg'";/></span><span>${admin.name}</span><a href='${link}'>${connect}</a></div>`
       ul.appendChild(li)
     }
   }
