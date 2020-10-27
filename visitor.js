@@ -8,36 +8,36 @@ let adminShowing = false
 let activeSocialType = ''
 let admins = []
 let connectTypes = {
-    email: "mailto:",
-    whatsapp: "https://api.whatsapp.com/send?phone=",
-    snapchat: "https://www.snapchat.com/",
-    phone: "",
-    messenger: "http://m.me/",
-    telegram: "https://telegram.me/"
+  email: "mailto:",
+  whatsapp: "https://wa.me/",
+  snapchat: "https://www.snapchat.com/",
+  phone: "",
+  messenger: "http://m.me/",
+  telegram: "https://telegram.me/"
 }
 let socialColor = {
-    email: "pink",
-    whatsapp: "green",
-    snapchat: "yellow",
-    phone: "red",
-    messenger: "blue",
-    telegram: "orange"
+  email: "pink",
+  whatsapp: "green",
+  snapchat: "yellow",
+  phone: "red",
+  messenger: "blue",
+  telegram: "orange"
 }
 let socialImages = {
-    email: "006-email.svg",
-    whatsapp: "001-whatsapp.svg",
-    snapchat: "002-snapchat.svg",
-    phone: "003-phone-call.svg",
-    messenger: "004-messenger.svg",
-    telegram: "005-send.svg"
+  email: "mail.svg",
+  whatsapp: "whatsapp.svg",
+  snapchat: "snapchat.svg",
+  phone: "call.svg",
+  messenger: "fb.svg",
+  telegram: "telegram.svg"
 }
 document.body.insertAdjacentHTML(
-    "afterend",
-    `<div id="social-share-azym">
-        <div id="azym-admin-list">
+  "afterend",
+  `<div id="social-share-azym">
+        <div id="azym-admin-list">        
         </div>
         <ul id="azym-social-icons" class="social-itens">
-            <li id="whatsapp-azym">
+            <li>
                 <span onclick="showAdmins('whatsapp')" class="social-icons">                
                 
 <svg width="118.134" height="118.148" viewBox="0 0 118.134 118.148">
@@ -59,7 +59,7 @@ document.body.insertAdjacentHTML(
 
                 </span>
             </li>
-            <li id="snapchat-azym">
+            <li>
             <span onclick="showAdmins('snapchat')" class="social-icons">      
             <svg width="118.135" height="118.15" viewBox="0 0 118.135 118.15">
             <g id="snapchat" transform="translate(-43.594 -38.574)">
@@ -71,7 +71,7 @@ document.body.insertAdjacentHTML(
             </svg>
             </span>
             </li>
-            <li id="phone-azym">
+            <li>
             <span onclick="showAdmins('phone')" class="social-icons">            
             <svg width="118.135" height="118.15" viewBox="0 0 118.135 118.15">
             <g id="call" transform="translate(-43.157 -38.574)">
@@ -89,7 +89,7 @@ document.body.insertAdjacentHTML(
             </svg>
             </span>
             </li>
-            <li id="messenger-azym">
+            <li>
             <span onclick="showAdmins('messenger')" class="social-icons">
             <svg width="118.135" height="118.149" viewBox="0 0 118.135 118.149">
             <g id="fb" transform="translate(-43.094 -39.264)">
@@ -101,12 +101,12 @@ document.body.insertAdjacentHTML(
             </svg>
             </span>
             </li>
-            <li id="telegram-azym">
+            <li>
             <span onclick="showAdmins('telegram')" class="social-icons">           
             <svg enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512"><circle cx="12" cy="12" fill="#039be5" r="12"/><path d="m5.491 11.74 11.57-4.461c.537-.194 1.006.131.832.943l.001-.001-1.97 9.281c-.146.658-.537.818-1.084.508l-3-2.211-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953z" fill="#fff"/></svg>
             </span>
             </li>
-            <li id="email-azym">
+            <li>
             <span onclick="showAdmins('email')" class="social-icons">
             <svg width="118.135" height="118.15" viewBox="0 0 118.135 118.15">
                 <g id="mail" transform="translate(-43.094 -40.094)">
@@ -126,6 +126,7 @@ document.body.insertAdjacentHTML(
         </ul>
         <div class="social-open-menu">
         <div id="social-circle-chat" class="circleChatButtonWrap" onclick="azym_open_social()">
+        <span class="close-icon">&times;</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M468.5 306.6c-4.1-10.2-15.8-15.2-26-11 -10.2 4.1-15.2 15.8-11 26L455 379.8l-70-30.8c-5.1-2.2-10.8-2.3-15.9-0.1 -23.9 10.2-49.5 15.4-76.1 15.4 -107.1 0-179-83.8-179-162.1 0-89.4 80.3-162.1 179-162.1s179 72.7 179 162.1c0 7-0.6 15.3-1.8 22.9 -1.6 10.9 5.9 21.1 16.8 22.7 10.9 1.6 21.1-5.9 22.7-16.8 1.4-9.6 2.2-19.8 2.2-28.8 0-54.3-23-105.3-64.8-143.5C405.9 20.8 351.2 0 293 0S180.1 20.8 138.8 58.6c-37.3 34.2-59.7 78.5-64 126.3C27.8 216 0 265.9 0 319.5c0 33.5 10.6 65.3 30.7 92.7L1.5 484.5c-3.1 7.5-1.2 16.2 4.6 21.9 3.8 3.7 8.8 5.6 13.9 5.6 2.7 0 5.5-0.6 8.1-1.7l84.2-37.1c21.2 7.9 43.6 11.9 66.7 11.9 0.5 0 1 0 1.5-0.1 33.4-0.3 65.9-9 94.1-25.5 25.2-14.7 46-35 60.5-58.9 14.2-2.5 28.1-6.4 41.5-11.6l107.3 47.3c2.6 1.1 5.3 1.7 8.1 1.7 5.1 0 10.1-1.9 13.9-5.6 5.8-5.7 7.7-14.3 4.6-21.9L468.5 306.6zM179 445c-0.3 0-0.5 0-0.8 0 -20.4-0.1-40.1-4.1-58.4-11.9 -5.1-2.2-10.9-2.1-15.9 0.1l-46.8 20.6 15.1-37.4c2.8-6.9 1.5-14.8-3.3-20.5 -18.8-22.1-28.8-48.5-28.8-76.5 0-32 13.4-62.2 37-85.2 7.3 39.9 28 78.1 59.2 108.1 38.8 37.3 90.1 59 145.5 61.6C255.6 429.6 218.4 445 179 445z"/><circle cx="292" cy="203" r="20"/><circle cx="372" cy="203" r="20"/><circle cx="212" cy="203" r="20"/></svg>
         </div>
         </div>
@@ -133,16 +134,16 @@ document.body.insertAdjacentHTML(
 
 //inserting chat html to body
 document.body.insertAdjacentHTML(
-    "afterend",
-    `<div class="chat-section" id="chat-section" style="display:none">
+  "afterend",
+  `<div class="chat-section" id="chat-section" style="display:none">
     <div id="header-section" class="header-section">
         <div class="header-title">
         <span class="user-icon"> <img src="${adminPath}/public/img/user.svg"></span>
-            <span id="openChat">Agents are online!</span>
-        </div>
-        <div class="minus-close">
-        <img onclick='minimizeChat()' src="${adminPath}/public/img/minus.svg">
-        <img onclick='closeChat()' src="${adminPath}/public/img/Close.svg">
+        <span id="openChat">Agents are online!</span>
+    </div>
+    <div class="minus-close">
+    <img onclick='minimizeChat()' src="${adminPath}/public/img/minus.svg">
+    <img onclick='closeChat()' src="${adminPath}/public/img/Close.svg">
         </div>
     </div>
     <div class="co-browsing">
@@ -153,7 +154,7 @@ document.body.insertAdjacentHTML(
 <div id="visitorRating" style="display:none">
     <div class="visitorIcon">
     <div class="visitorRatingTitle">
-     <img src="https://cloudchat.azymcloud.com/public/img/user-icon.svg">
+    <img src="https://cloudchat.azymcloud.com/public/img/user-icon.svg">
     <h2 id="rating-text-heading">Please rate your customer service experience :</h2>
 </div>
    <div class="labelIcon">
@@ -172,7 +173,6 @@ document.body.insertAdjacentHTML(
     <object><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zM256 480C132.3 480 32 379.7 32 256S132.3 32 256 32s224 100.3 224 224S379.7 480 256 480z"/><circle cx="176" cy="176" r="32"/><circle cx="336" cy="176" r="32"/><path d="M368 256c0 61.9-50.1 112-112 112s-112-50.1-112-112h-32c0 79.5 64.5 144 144 144s144-64.5 144-144H368z"/></svg></object>
    <span class="tooltiptext tooltip-bottom">It was Good</span>
     </label>
-
 </div>
 </div>
     </div>
@@ -210,7 +210,6 @@ document.body.insertAdjacentHTML(
             <li>
         </ul>
     </div>
-
     <div class="messages-box" id="message-box-azym">
         <textarea maxlength="1000" id="message-box-visitor" placeholder="Enter your message"></textarea>
         <div id="send-chat-message" class="subadmin-button screen-share-icon" title="send">
@@ -228,12 +227,9 @@ document.body.insertAdjacentHTML(
     </div>
 </div>
 </div>
-
-
     <button type="button" class="LiveChatButton" onclick="openChat()" id="circuleChatButton">
         <span>Live chat</span>
     </div>
-
 <div id="thank-you-feedback" class="feedback">
 Thanks for your feedback !
 </div>
@@ -253,152 +249,152 @@ var video = document.getElementById("video");
 var streamObj;
 
 function showCobrowsingInput() {
-    const appCode = Math.floor(100000 + Math.random() * 900000);
-    // $('#SessionKey').html(appCode);
-    socket.emit("new_message", { message: ('Please connect to me with this ' + appCode + ' for screen share') });
-    CreateSession(appCode);
-    // $('.co-browsing').show();
-    // $('#SessionKey').show('slow');
+  const appCode = Math.floor(100000 + Math.random() * 900000);
+  // $('#SessionKey').html(appCode);
+  socket.emit("new_message", { message: ('Please connect to me with this ' + appCode + ' for screen share') });
+  CreateSession(appCode);
+  // $('.co-browsing').show();
+  // $('#SessionKey').show('slow');
 }
 
 document.getElementById('message-box-visitor').addEventListener('keypress', function (e) {
-    if (!myStorage.getItem('azym-visitor-name')) {
-        document.getElementById('azym-visitor-parent').style.display = 'block'
-        document.getElementById('message-box-azym').style.display = 'none'
-    }
+  if (!myStorage.getItem('azym-visitor-name')) {
+    document.getElementById('azym-visitor-parent').style.display = 'block'
+    document.getElementById('message-box-azym').style.display = 'none'
+  }
 });
 
 function azym_chat(appId) {
-    myStorage.setItem('id', appId)
-    // setting chatId if not exists
-    if (!myStorage.getItem("chatID")) {
-        myStorage.setItem("chatID", createUUID());
-        let history = { chat: [] };
-        myStorage.setItem("history", JSON.stringify(history));
-    }
+  myStorage.setItem('id', appId)
+  // setting chatId if not exists
+  if (!myStorage.getItem("chatID")) {
+    myStorage.setItem("chatID", createUUID());
+    let history = { chat: [] };
+    myStorage.setItem("history", JSON.stringify(history));
+  }
 
-    // getting chatId from local storage
-    let chatId = myStorage.getItem("chatID");
+  // getting chatId from local storage
+  let chatId = myStorage.getItem("chatID");
 
-    // initializing socket connection
-    socket = io.connect(socketUrl);
-    let vName = myStorage.getItem('azym-visitor-name') || "Annonymous";
+  // initializing socket connection
+  socket = io.connect(socketUrl);
+  let vName = myStorage.getItem('azym-visitor-name') || "Annonymous";
 
-    socket.on("connect", () => {
-        socket.emit("authentication", {
-            appId: appId,
-            chatId: chatId,
-            visitorName: vName
-        });
-
-        socket.on("authenticated", function () {
-            //check initial name
-            if (myStorage.getItem('azym-visitor-name')) {
-                let visitorName = myStorage.getItem('azym-visitor-name')
-                socket.emit('visitorName', visitorName)
-            }
-            console.log("connected visitor");
-        });
+  socket.on("connect", () => {
+    socket.emit("authentication", {
+      appId: appId,
+      chatId: chatId,
+      visitorName: vName
     });
 
-    socket.on("unauthorized", reason => {
-        console.log("unauthorized visitor disconnected")
-        socket.disconnect();
+    socket.on("authenticated", function () {
+      //check initial name
+      if (myStorage.getItem('azym-visitor-name')) {
+        let visitorName = myStorage.getItem('azym-visitor-name')
+        socket.emit('visitorName', visitorName)
+      }
+      console.log("connected visitor");
+    });
+  });
+
+  socket.on("unauthorized", reason => {
+    console.log("unauthorized visitor disconnected")
+    socket.disconnect();
+  });
+
+  if (socket) {
+
+    // if all admins are offline
+    socket.on('offline_message', data => {
+      console.log('offline message is enabled');
+      myStorage.setItem('offline', true)
+      document.getElementById('openChat').innerText = 'Agents are offline !'
+      document.getElementById('chat-contact-form').style.display = 'block'
+      document.getElementById('online-chat').style.display = 'none'
+    })
+
+    // //status change event for offline and online
+    socket.on('statusChange', (status) => {
+      console.log('admin status changing', status);
+      if (status) {
+        myStorage.setItem('offline', true)
+        document.getElementById('openChat').innerText = 'Agents are offline !'
+        document.getElementById('chat-contact-form').style.display = 'block'
+        document.getElementById('online-chat').style.display = 'none'
+      } else {
+        myStorage.setItem('offline', false)
+        document.getElementById('openChat').innerText = 'Agents are online !'
+        document.getElementById('chat-contact-form').style.display = 'none'
+        document.getElementById('online-chat').style.display = 'block'
+      }
+    })
+
+    //site-admins
+    socket.on('site-admins', (siteAdmins) => {
+
+      admins = [...siteAdmins]
+      if (admins.length === 0) {
+        document.getElementById('social-circle-chat').style.display = 'none'
+      } else {
+        let temp = {
+          email: 0,
+          whatsapp: 0,
+          snapchat: 0,
+          phone: 0,
+          messenger: 0,
+          telegram: 0
+        }
+        for (let admin of admins) {
+          if (admin['whatsapp'])
+            temp['whatsapp'] += 1
+          if (admin['email'])
+            temp['email'] += 1
+          if (admin['phone'])
+            temp['phone'] += 1
+          if (admin['snapchat'])
+            temp['snapchat'] += 1
+          if (admin['telegram'])
+            temp['telegram'] += 1
+          if (admin['messenger'])
+            temp['messenger'] += 1
+        }
+        for (let key of Object.keys(temp)) {
+          if (!temp[key]) {
+            document.getElementById(`${key}` + "-azym").style.display = 'none'
+          }
+        }
+      }
+      console.log('site admins event called ', admins);
+    })
+
+    // color change events
+    socket.on('chatColorChange', (colorCode) => {
+      console.log('color change event called ', colorCode);
+      // change color of visitor's chat
+      myStorage.setItem('color', colorCode)
+      if (colorCode)
+        chatColorChange(colorCode)
+    })
+
+    socket.on('stop_screenShare', (data) => {
+      console.log('stop screen share called');
+      stopSharing();
     });
 
-    if (socket) {
+    socket.on('start_screenShare', (data) => {
+      console.log('start screen share called');
+      startScreenShare();
+    });
 
-        // if all admins are offline
-        socket.on('offline_message', data => {
-            console.log('offline message is enabled');
-            myStorage.setItem('offline', true)
-            document.getElementById('openChat').innerText = 'Agents are offline !'
-            document.getElementById('chat-contact-form').style.display = 'block'
-            document.getElementById('online-chat').style.display = 'none'
-        })
-
-        // //status change event for offline and online
-        socket.on('statusChange', (status) => {
-            console.log('admin status changing', status);
-            if (status) {
-                myStorage.setItem('offline', true)
-                document.getElementById('openChat').innerText = 'Agents are offline !'
-                document.getElementById('chat-contact-form').style.display = 'block'
-                document.getElementById('online-chat').style.display = 'none'
-            } else {
-                myStorage.setItem('offline', false)
-                document.getElementById('openChat').innerText = 'Agents are online !'
-                document.getElementById('chat-contact-form').style.display = 'none'
-                document.getElementById('online-chat').style.display = 'block'
-            }
-        })
-
-        //site-admins
-        socket.on('site-admins', (siteAdmins) => {
-
-            admins = [...siteAdmins]
-            if (admins.length === 0) {
-                document.getElementById('social-circle-chat').style.display = 'none'
-            } else {
-                let temp = {
-                    email: 0,
-                    whatsapp: 0,
-                    snapchat: 0,
-                    phone: 0,
-                    messenger: 0,
-                    telegram: 0
-                }
-                for (let admin of admins) {
-                    if (admin['whatsapp'])
-                        temp['whatsapp'] += 1
-                    if (admin['email'])
-                        temp['email'] += 1
-                    if (admin['phone'])
-                        temp['phone'] += 1
-                    if (admin['snapchat'])
-                        temp['snapchat'] += 1
-                    if (admin['telegram'])
-                        temp['telegram'] += 1
-                    if (admin['messenger'])
-                        temp['messenger'] += 1
-                }
-                for (let key of Object.keys(temp)) {
-                    if (!temp[key]) {
-                        document.getElementById(`${key}` + "-azym").style.display = 'none'
-                    }
-                }
-            }
-            console.log('site admins event called ', admins);
-        })
-
-        // color change events
-        socket.on('chatColorChange', (colorCode) => {
-            console.log('color change event called ', colorCode);
-            // change color of visitor's chat
-            myStorage.setItem('color', colorCode)
-            if (colorCode)
-                chatColorChange(colorCode)
-        })
-
-        socket.on('stop_screenShare', (data) => {
-            console.log('stop screen share called');
-            stopSharing();
-        });
-
-        socket.on('start_screenShare', (data) => {
-            console.log('start screen share called');
-            startScreenShare();
-        });
-
-        // New message events
-        socket.on("new_message", data => {
-            console.log('new message arrived ', data);
-            let node = document.getElementById('msgList-client');
-            if (data.role == "visitor") {
-                addMessage(data.message)
-            } else {
-                let adminImage = adminPath + '/' + data.image
-                node.innerHTML += `<li><div class="chat-admin">
+    // New message events
+    socket.on("new_message", data => {
+      console.log('new message arrived ', data);
+      let node = document.getElementById('msgList-client');
+      if (data.role == "visitor") {
+        addMessage(data.message)
+      } else {
+        let adminImage = adminPath + '/' + data.image
+        node.innerHTML += `<li><div class="chat-admin">
                     <span class="User">
                         <img src="${adminImage}" >
                     </span>
@@ -411,25 +407,25 @@ function azym_chat(appId) {
                         </div>
                     </div>
                     </div></li>`
-            }
-            openChat();
-            animateMessageDiv();
+      }
+      openChat();
+      animateMessageDiv();
 
-            // saving chat history to localstorage
-            let history = JSON.parse(myStorage.getItem("history"));
-            history["chat"].push({ admin: data.message });
-            myStorage.setItem("history", JSON.stringify(history));
-        });
-    }
+      // saving chat history to localstorage
+      let history = JSON.parse(myStorage.getItem("history"));
+      history["chat"].push({ admin: data.message });
+      myStorage.setItem("history", JSON.stringify(history));
+    });
+  }
 }
 
 // add message to chat side
 function addMessage() {
-    let message = document.getElementById('message-box-visitor').value
-    if (message) {
-        document.getElementById('message-box-visitor').value = '';
-        let node = document.getElementById('msgList-client');
-        node.innerHTML += ` <li><div class="subadmin">
+  let message = document.getElementById('message-box-visitor').value
+  if (message) {
+    document.getElementById('message-box-visitor').value = '';
+    let node = document.getElementById('msgList-client');
+    node.innerHTML += ` <li><div class="subadmin">
                             <div class="messagesPanel">
                             <span class="messages">${message}</span>
                             </div>
@@ -437,55 +433,55 @@ function addMessage() {
                 <img src="https://cloudchat.azymcloud.com/public/img/user-icon.svg">
             </span>
                         </div></li>`;
-        socket.emit("new_message", { message: message });
-        animateMessageDiv();
-    }
+    socket.emit("new_message", { message: message });
+    animateMessageDiv();
+  }
 }
 
 function animateMessageDiv() {
-    const messageList = $('#msgList-client');
-    $("#chat-messages").animate({
-        scrollTop: messageList[0].offsetHeight
-    });
+  const messageList = $('#msgList-client');
+  $("#chat-messages").animate({
+    scrollTop: messageList[0].offsetHeight
+  });
 }
 
 // binding send and enter button to send messages
 document.getElementById('message-box-visitor').addEventListener('keyup', function (e) {
-    if (event.keyCode === 13) {
-        addMessage()
-    }
+  if (event.keyCode === 13) {
+    addMessage()
+  }
 });
 
 // method for changing chat color
 function chatColorChange(color = '#EEA849') {
-    document.getElementsByClassName('circleChatButtonWrap')[0].style.background = color
-    document.getElementsByClassName('chat-section')[0].style.background = color
+  document.getElementsByClassName('circleChatButtonWrap')[0].style.background = color
+  document.getElementsByClassName('chat-section')[0].style.background = color
 }
 
 // crreating unique chatId randomly
 function createUUID() {
-    let s = [];
-    let hexDigits = "0123456789abcdef";
-    for (let i = 0; i < 36; i++) {
-        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-    }
-    s[14] = "4";
-    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
-    s[8] = s[13] = s[18] = s[23] = "-";
-    let uuid = s.join("");
-    return uuid;
+  let s = [];
+  let hexDigits = "0123456789abcdef";
+  for (let i = 0; i < 36; i++) {
+    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+  }
+  s[14] = "4";
+  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
+  s[8] = s[13] = s[18] = s[23] = "-";
+  let uuid = s.join("");
+  return uuid;
 }
 
 function visitorName() {
-    let visitorName = document.getElementById('azym-visitor').value;
-    if (visitorName) {
-        if (socket) {
-            socket.emit('visitorName', visitorName)
-        }
-        document.getElementById('azym-visitor-parent').style.display = 'none'
-        document.getElementById('message-box-azym').style.display = 'flex'
-        myStorage.setItem('azym-visitor-name', visitorName)
+  let visitorName = document.getElementById('azym-visitor').value;
+  if (visitorName) {
+    if (socket) {
+      socket.emit('visitorName', visitorName)
     }
+    document.getElementById('azym-visitor-parent').style.display = 'none'
+    document.getElementById('message-box-azym').style.display = 'flex'
+    myStorage.setItem('azym-visitor-name', visitorName)
+  }
 }
 
 //******************************************************************
@@ -493,30 +489,30 @@ function visitorName() {
 //******************************************************************
 
 async function sendOfflineMessage() {
-    console.log('sending offline message to admins');
-    let name = document.getElementById('nameOff').value || 'annoymous'
-    let subject = document.getElementById('subjectOff').value
-    let message = document.getElementById('messageOff').value
-    let email = document.getElementById('emailOff').value
-    let id = myStorage.getItem('id')
-    if (name && subject && message && email && id) {
-        const rawResponse = await fetch(`${socketUrl}/api/send/mail`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, subject, message, email, id })
-        });
-        const content = await rawResponse.json();
-        name = document.getElementById('nameOff').value = ''
-        subject = document.getElementById('subjectOff').value = ''
-        message = document.getElementById('messageOff').value = ''
-        email = document.getElementById('emailOff').value = ''
-        console.log(content);
-    } else {
-        console.error('complete your form first !')
-    }
+  console.log('sending offline message to admins');
+  let name = document.getElementById('nameOff').value || 'annoymous'
+  let subject = document.getElementById('subjectOff').value
+  let message = document.getElementById('messageOff').value
+  let email = document.getElementById('emailOff').value
+  let id = myStorage.getItem('id')
+  if (name && subject && message && email && id) {
+    const rawResponse = await fetch(`${socketUrl}/api/send/mail`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, subject, message, email, id })
+    });
+    const content = await rawResponse.json();
+    name = document.getElementById('nameOff').value = ''
+    subject = document.getElementById('subjectOff').value = ''
+    message = document.getElementById('messageOff').value = ''
+    email = document.getElementById('emailOff').value = ''
+    console.log(content);
+  } else {
+    console.error('complete your form first !')
+  }
 }
 
 //******************************************************************
@@ -524,42 +520,42 @@ async function sendOfflineMessage() {
 //******************************************************************
 
 function startScreenShare() {
-    _startScreenCapture().then(stream => {
-        streamObj = stream;
-        loadCamera(stream);
-        stream.addEventListener('inactive', e => {
-            socket.emit('data_received', null);
-            clearInterval(interval);
-        });
-    }).catch(err => {
-        console.log('====err==', err);
+  _startScreenCapture().then(stream => {
+    streamObj = stream;
+    loadCamera(stream);
+    stream.addEventListener('inactive', e => {
+      socket.emit('data_received', null);
+      clearInterval(interval);
     });
+  }).catch(err => {
+    console.log('====err==', err);
+  });
 }
 
 function loadCamera(stream) {
-    try {
-        video.srcObject = stream;
-        interval = setInterval(function () {
-            viewVideo(video, context);
-        }, 3);
-    } catch (error) {
-        video.src = URL.createObjectURL(stream);
-    }
+  try {
+    video.srcObject = stream;
+    interval = setInterval(function () {
+      viewVideo(video, context);
+    }, 3);
+  } catch (error) {
+    video.src = URL.createObjectURL(stream);
+  }
 }
 
 function viewVideo(video, context) {
-    context.drawImage(video, 0, 0, context.width, context.height);
-    socket.emit('data_received', canvas.toDataURL('image/webp'));
+  context.drawImage(video, 0, 0, context.width, context.height);
+  socket.emit('data_received', canvas.toDataURL('image/webp'));
 }
 
 function _startScreenCapture() {
-    if (navigator.getDisplayMedia) {
-        return navigator.getDisplayMedia({ video: true })
-    } else if (navigator.mediaDevices.getDisplayMedia) {
-        return navigator.mediaDevices.getDisplayMedia({ video: true })
-    } else {
-        return navigator.mediaDevices.getUserMedia({ video: { mediaSource: 'screen' } })
-    }
+  if (navigator.getDisplayMedia) {
+    return navigator.getDisplayMedia({ video: true })
+  } else if (navigator.mediaDevices.getDisplayMedia) {
+    return navigator.mediaDevices.getDisplayMedia({ video: true })
+  } else {
+    return navigator.mediaDevices.getUserMedia({ video: { mediaSource: 'screen' } })
+  }
 }
 
 //******************************************************************
@@ -568,37 +564,37 @@ function _startScreenCapture() {
 
 
 function minimizeChat() {
-    document.getElementById('chat-section').style.display = 'none'
-    //document.getElementsByClassName('circleChatButtonWrap')[0].style.display = 'block'
+  document.getElementById('chat-section').style.display = 'none'
+  //document.getElementsByClassName('circleChatButtonWrap')[0].style.display = 'block'
 }
 
 function closeChat() {
-    if (myStorage.getItem('offline') == 'true')
-        document.getElementById('rating-text-heading').innerHTML = "We do like some feedback <br/> How do you feel about this page ?"
-    else
-        document.getElementById('rating-text-heading').innerHTML = 'Please rate your customer service experience :'
-    document.getElementById('visitorRating').style.display = 'block'
-    changeSessionUI()
+  if (myStorage.getItem('offline') == 'true')
+    document.getElementById('rating-text-heading').innerHTML = "We do like some feedback <br/> How do you feel about this page ?"
+  else
+    document.getElementById('rating-text-heading').innerHTML = 'Please rate your customer service experience :'
+  document.getElementById('visitorRating').style.display = 'block'
+  changeSessionUI()
 }
 
 function changeSessionUI() {
-    document.getElementById('online-chat').style.display = 'none';
-    document.getElementById('chat-contact-form').style.display = 'none'
+  document.getElementById('online-chat').style.display = 'none';
+  document.getElementById('chat-contact-form').style.display = 'none'
 }
 
 function openChat() {
-    if (myStorage.getItem('offline') == 'true') {
-        document.getElementById('openChat').innerText = 'Agents are offline !'
-        document.getElementById('chat-contact-form').style.display = 'block'
-        document.getElementById('online-chat').style.display = 'none'
-    } else {
-        document.getElementById('openChat').innerText = 'Agents are online !'
-        document.getElementById('chat-contact-form').style.display = 'none'
-        document.getElementById('online-chat').style.display = 'block'
-    }
-    document.getElementById('visitorRating').style.display = 'none'
-    document.getElementById('chat-section').style.display = 'block'
-    //document.getElementsByClassName('circleChatButtonWrap')[0].style.display = 'none'
+  if (myStorage.getItem('offline') == 'true') {
+    document.getElementById('openChat').innerText = 'Agents are offline !'
+    document.getElementById('chat-contact-form').style.display = 'block'
+    document.getElementById('online-chat').style.display = 'none'
+  } else {
+    document.getElementById('openChat').innerText = 'Agents are online !'
+    document.getElementById('chat-contact-form').style.display = 'none'
+    document.getElementById('online-chat').style.display = 'block'
+  }
+  document.getElementById('visitorRating').style.display = 'none'
+  document.getElementById('chat-section').style.display = 'block'
+  //document.getElementsByClassName('circleChatButtonWrap')[0].style.display = 'none'
 }
 
 //******************************************************************
@@ -609,89 +605,102 @@ document.getElementById('openChat').addEventListener('click', openChat)
 
 //check initial color and change
 if (myStorage.getItem('color')) {
-    let color = myStorage.getItem('color')
-    chatColorChange(color)
+  let color = myStorage.getItem('color')
+  chatColorChange(color)
 }
 
 // add events for visitor ratings emoji's
 let elements = document.getElementsByClassName('visitorRating');
 for (var i = 0; i < elements.length; i++) {
-    elements[i].addEventListener('click', myFunction, false);
+  elements[i].addEventListener('click', myFunction, false);
 }
 
 function myFunction(e) {
-    myStorage.setItem('rating', true)
-    minimizeChat()
-    document.getElementById('thank-you-feedback').style.display = 'block'
-    setTimeout(() => { document.getElementById('thank-you-feedback').style.display = 'none' }, 1000)
-    if (myStorage.getItem('offline') == 'true')
-        socket.emit('azymRatings', this.value);
-    else
-        socket.emit('ratings', this.value);
-    document.getElementById('visitorRating').style.display = 'none'
+  myStorage.setItem('rating', true)
+  minimizeChat()
+  document.getElementById('thank-you-feedback').style.display = 'block'
+  setTimeout(() => { document.getElementById('thank-you-feedback').style.display = 'none' }, 1000)
+  if (myStorage.getItem('offline') == 'true')
+    socket.emit('azymRatings', this.value);
+  else
+    socket.emit('ratings', this.value);
+  document.getElementById('visitorRating').style.display = 'none'
 }
 
 function offline_box() {
-    document.getElementById('openChat').innerText = 'Agents are offline !'
-    document.getElementById('chat-contact-form').style.display = 'block'
-    document.getElementById('online-chat').style.display = 'none'
+  document.getElementById('openChat').innerText = 'Agents are offline !'
+  document.getElementById('chat-contact-form').style.display = 'block'
+  document.getElementById('online-chat').style.display = 'none'
 }
-
+$(document).on('click', ".close-detailbox", function () {
+  // alert(1)
+  $("#azym-admin-list").fadeOut("slow");
+})
 function azym_open_social() {
-    console.log('calling onclickkkkk');
-    if (socialOpen) {
-        document.getElementById('azym-social-icons').style.display = 'none'
-        if (adminShowing) {
-            document.getElementById('azym-admin-list').style.display = 'none'
-            adminShowing = !adminShowing
-        }
+  console.log('calling onclickkkkk');
+  // alert(1)
+  if (socialOpen) {
+    $("#azym-social-icons").slideToggle("slow");
+    $(this).addClass("social-open");
+    if (adminShowing) {
+      $("#azym-admin-list").fadeOut("slow");
+      adminShowing = !adminShowing
     }
-    else
-        document.getElementById('azym-social-icons').style.display = 'block'
-    socialOpen = !socialOpen
+  }
+  else
+    $("#azym-social-icons").slideToggle("slow");
+  $("#social-circle-chat").toggleClass("social-open");
+  socialOpen = !socialOpen
 }
 
 function showAdmins(type) {
-    let adList = document.getElementById('azym-admin-list')
-    if (adminShowing && (type === activeSocialType)) {
-        adminShowing = false
-        adList.style.display = 'none'
-        return;
+  let adList = document.getElementById('azym-admin-list')
+  if (adminShowing && (type === activeSocialType)) {
+    adminShowing = false
+    adList.style.display = 'none'
+    return;
+  }
+  activeSocialType = type
+  adList.innerHTML = ""
+  let ul = document.createElement('ul')
+  for (let admin of admins) {
+    let link = '';
+    if (type === "phone")
+      link = "#"
+    else
+      link = connectTypes[type] + admin[type]
+
+    if (type === "whatsapp") {
+      link = connectTypes[type] + admin['countryCallingCode'] + admin[type]
     }
-    activeSocialType = type
-    adList.innerHTML = ""
-    let ul = document.createElement('ul')
-    for (let admin of admins) {
-        let link='';
-        if(type==="phone")
-            link = "#"
-        else
-            link = connectTypes[type] + admin[type]
-        if (admin[type]) {
-            let li = document.createElement('li')
-            let profile = adminPath + '/' + admin.profilePicture
-            let connect = (type === "phone") ? admin['phone'] : "connect"
-            li.innerHTML = `<div><span><img class="admin-profile-azym" src='${profile}' /></span><span>${admin.name}</span><a href='${link}'>${connect}</a></div>`
-            ul.appendChild(li)
-        }
+
+    if (admin[type]) {
+      let li = document.createElement('li')
+      let profile = (admin.profilePicture) ? admin.profilePicture : 'user.svg'
+      profile = adminPath + '/' + profile
+      let connect = (type === "phone") ? (admin['countryCallingCode'] + admin['phone']) : "connect"
+      li.innerHTML = `<div><span><img class="admin-profile-azym" src='${profile}' /></span><span>${admin.name}</span><a href='${link}'>${connect}</a></div>`
+      ul.appendChild(li)
     }
-    let div = document.createElement('div')
-    div.setAttribute("class", "headerlist")
-    div.style.background = socialColor[type]
-    let span = document.createElement('span')
-    span.innerHTML = type
-    let imageSpan = document.createElement('span')
-    imageSpan.setAttribute("class", "listIcon")
-    let image = document.createElement('img')
-    image.style.height = '38px';
-    image.style.width = '40px';
-    let imgPath = adminPath + '/public/img/' + socialImages[type]
-    image.setAttribute("src", imgPath)
-    imageSpan.appendChild(image)
-    div.appendChild(imageSpan)
-    div.appendChild(span)
-    adList.appendChild(div)
-    adList.appendChild(ul)
-    adList.style.display = 'block'
-    adminShowing = true
+  }
+  let div = document.createElement('div')
+  div.setAttribute("class", "headerlist")
+  div.style.background = socialColor[type]
+  let span = document.createElement('span')
+  span.innerHTML = type
+  let imageSpan = document.createElement('span')
+  imageSpan.setAttribute("class", "listIcon")
+  let image = document.createElement('img')
+  image.style.height = '38px';
+  image.style.width = '40px';
+  let imgPath = adminPath + '/public/img/' + socialImages[type]
+  image.setAttribute("src", imgPath)
+  imageSpan.appendChild(image)
+  div.appendChild(imageSpan)
+  div.appendChild(span)
+  adList.appendChild(div)
+  adList.appendChild(ul)
+  adList.style.display = 'block'
+  adminShowing = true
+  $("#azym-admin-list .headerlist").append('<span class="close-detailbox">&times;</span>')
 }
