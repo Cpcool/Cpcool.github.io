@@ -676,7 +676,7 @@ function showAdmins(type) {
 
     if (admin[type]) {
       let li = document.createElement('li')
-      let profile = (admin.profilePicture) ? admin.profilePicture : 'user.svg'
+      let profile = (admin.profilePicture) ? admin.profilePicture : 'public/img/user.svg'
       profile = adminPath + '/' + profile
       let connect = (type === "phone") ? (admin['countryCallingCode'] + admin['phone']) : "connect"
       li.innerHTML = `<div><span><img class="admin-profile-azym" src='${profile}' /></span><span>${admin.name}</span><a href='${link}'>${connect}</a></div>`
