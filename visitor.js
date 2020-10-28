@@ -10,7 +10,7 @@ let admins = []
 let connectTypes = {
   email: "mailto:",
   whatsapp: "https://wa.me/",
-  snapchat: "https://www.snapchat.com/",
+  snapchat: "https://www.snapchat.com/add/",
   phone: "",
   messenger: "http://m.me/",
   telegram: "https://telegram.me/"
