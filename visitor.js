@@ -333,7 +333,7 @@ function azym_chat(appId) {
         //site-admins
         socket.on('site-admins', (adminInfo) => {
             console.log("admin info is here =>", adminInfo)
-            adminSocialInfo = { ...adminInfo }
+            adminSocialInfo = JSON.parse(JSON.stringify(adminInfo)) //{ ...adminInfo }
             if (Object.keys(adminInfo).length === 0) {
                 document.getElementById('social-circle-chat').style.display = 'none'
             }
