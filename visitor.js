@@ -3,10 +3,11 @@ let socket = null;
 let socketUrl = "//azymchat-backend-ukjr2sq55q-uc.a.run.app";
 let appId = null;
 const adminPath = 'https://cloudchat.azymcloud.com';
-let socialOpen = false
-let adminShowing = false
-let activeSocialType = ''
-let adminSocialInfo = {}
+const bucketPath =  'https://storage.googleapis.com/azym_image_upload';
+let socialOpen = false;
+let adminShowing = false;
+let activeSocialType = '';
+let adminSocialInfo = {};
 let connectTypes = {
     email: "mailto:",
     whatsapp: "https://wa.me/",
@@ -154,7 +155,7 @@ document.body.insertAdjacentHTML(
 <div id="visitorRating" style="display:none">
     <div class="visitorIcon">
     <div class="visitorRatingTitle">
-    <img src="https://cloudchat.azymcloud.com/public/img/user-icon.svg">
+    <img src="https://storage.googleapis.com/azym_image_upload/avatardefault_92824.png">
     <h2 id="rating-text-heading">Please rate your customer service experience :</h2>
 </div>
    <div class="labelIcon">
@@ -392,7 +393,7 @@ function azym_chat(appId) {
             if (data.role == "visitor") {
                 addMessage(data.message)
             } else {
-                let adminImage = adminPath + '/' + data.image
+                let adminImage = bucketPath + '/' + data.image;
                 node.innerHTML += `<li><div class="chat-admin">
                     <span class="User">
                         <img src="${adminImage}" onerror="this.onerror=null; this.src='https://cloudchat.azymcloud.com/public/img/user.svg'" >
@@ -429,7 +430,7 @@ function addMessage() {
                             <span class="messages">${message}</span>
                             </div>
                             <span class="User">
-                <img src="https://cloudchat.azymcloud.com/public/img/user-icon.svg">
+                <img src="https://storage.googleapis.com/azym_image_upload/avatardefault_92824.png">
             </span>
                         </div></li>`;
         socket.emit("new_message", { message: message });
@@ -613,6 +614,12 @@ let elements = document.getElementsByClassName('visitorRating');
 for (var i = 0; i < elements.length; i++) {
     elements[i].addEventListener('click', myFunction, false);
 }
+
+// set meta tag
+let metaTag = document.createElement('meta');
+metaTag.setAttribute('name', 'viewport');
+metaTag.content = 'width=device-width,initial-scale=1,maximum-scale=1';
+document.getElementsByTagName('head')[0].appendChild(metaTag);
 
 function myFunction(e) {
     myStorage.setItem('rating', true)
