@@ -3,7 +3,7 @@ let socket = null;
 let socketUrl = "//azymchat-backend-ukjr2sq55q-uc.a.run.app";
 let appId = null;
 const adminPath = 'https://cloudchat.azymcloud.com';
-const bucketPath =  'https://storage.googleapis.com/azym_image_upload';
+const bucketPath = 'https://storage.googleapis.com/azym_image_upload';
 let socialOpen = false;
 let adminShowing = false;
 let activeSocialType = '';
@@ -333,7 +333,7 @@ function azym_chat(appId) {
         //site-admins
         socket.on('site-admins', (adminInfo) => {
             console.log("admin info is here =>", adminInfo)
-            adminSocialInfo = JSON.parse(JSON.stringify(adminInfo)) //{ ...adminInfo }
+            adminSocialInfo = JSON.parse(JSON.stringify(adminInfo))
             if (Object.keys(adminInfo).length === 0) {
                 document.getElementById('social-circle-chat').style.display = 'none'
             }
