@@ -421,8 +421,9 @@ function azym_chat(appId) {
 
 // add message to chat side
 function addMessage() {
-    let message = document.getElementById('message-box-visitor').value
-    if (message) {
+    let message = (document.getElementById('message-box-visitor').value).trim()
+    console.log(message);
+    if (message !== '') {
         document.getElementById('message-box-visitor').value = '';
         let node = document.getElementById('msgList-client');
         node.innerHTML += ` <li><div class="subadmin">
