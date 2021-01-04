@@ -321,14 +321,14 @@ function azym_chat(appId) {
             if (status) {
                 myStorage.setItem('offline', true)
                 document.getElementById('openChat').innerText = 'Agents are offline !'
-                if (ratingDisplay == 'block')
+                if (ratingDisplay == 'none')
                     document.getElementById('chat-contact-form').style.display = 'block'
                 document.getElementById('online-chat').style.display = 'none'
             } else {
                 myStorage.setItem('offline', false)
                 document.getElementById('openChat').innerText = 'Agents are online !'
                 document.getElementById('chat-contact-form').style.display = 'none'
-                if (ratingDisplay == 'block')
+                if (ratingDisplay == 'none')
                     document.getElementById('chat-contact-form').style.display = 'block'
                 document.getElementById('online-chat').style.display = 'block'
             }
