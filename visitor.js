@@ -316,16 +316,20 @@ function azym_chat(appId) {
 
         // //status change event for offline and online
         socket.on('statusChange', (status) => {
+            let ratingDisplay = document.getElementById('visitorRating').style.display
             console.log('admin status changing', status);
             if (status) {
                 myStorage.setItem('offline', true)
                 document.getElementById('openChat').innerText = 'Agents are offline !'
-                document.getElementById('chat-contact-form').style.display = 'block'
+                if (ratingDisplay == 'block')
+                    document.getElementById('chat-contact-form').style.display = 'block'
                 document.getElementById('online-chat').style.display = 'none'
             } else {
                 myStorage.setItem('offline', false)
                 document.getElementById('openChat').innerText = 'Agents are online !'
                 document.getElementById('chat-contact-form').style.display = 'none'
+                if (ratingDisplay == 'block')
+                    document.getElementById('chat-contact-form').style.display = 'block'
                 document.getElementById('online-chat').style.display = 'block'
             }
         })
@@ -421,8 +425,8 @@ function azym_chat(appId) {
 
 // add message to chat side
 function addMessage() {
-    let message = (document.getElementById('message-box-visitor').value).trim()
-    if (message !== '') {
+    let message = document.getElementById('message-box-visitor').value
+    if (message) {
         document.getElementById('message-box-visitor').value = '';
         let node = document.getElementById('msgList-client');
         node.innerHTML += ` <li><div class="subadmin">
