@@ -328,9 +328,10 @@ function azym_chat(appId) {
                 myStorage.setItem('offline', false)
                 document.getElementById('openChat').innerText = 'Agents are online !'
                 document.getElementById('chat-contact-form').style.display = 'none'
-                if (ratingDisplay == 'none')
-                    document.getElementById('chat-contact-form').style.display = 'block'
-                document.getElementById('online-chat').style.display = 'block'
+                if (ratingDisplay == 'none'){
+                    document.getElementById('chat-contact-form').style.display = 'none'
+                    document.getElementById('online-chat').style.display = 'block'
+                }
             }
         })
 
