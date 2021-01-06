@@ -317,7 +317,7 @@ function azym_chat(appId) {
         // //status change event for offline and online
         socket.on('statusChange', (status) => {
             let ratingDisplay = document.getElementById('visitorRating').style.display
-            console.log('admin status changing', status);
+            console.log('admin status changing', status, ratingDisplay);
             if (status) {
                 myStorage.setItem('offline', true)
                 document.getElementById('openChat').innerText = 'Agents are offline !'
