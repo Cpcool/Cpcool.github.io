@@ -32,6 +32,23 @@ let socialImages = {
     messenger: "fb.svg",
     telegram: "telegram.svg"
 }
+let zIndex = 1;
+
+function findHighestZIndex(elem, zIndexValue) {
+    var elems = document.getElementsByTagName(elem);
+    var highest = zIndexValue || Number.MIN_SAFE_INTEGER || -(Math.pow(2, 53) - 1);
+    for (var i = 0; i < elems.length; i++) {
+        var zindex = Number.parseInt(
+            document.defaultView.getComputedStyle(elems[i], null).getPropertyValue("z-index"),
+            10
+        );
+        if (zindex > highest) {
+            highest = zindex;
+        }
+    }
+    return highest;
+}
+
 document.body.insertAdjacentHTML(
     "afterend",
     `<div id="social-share-azym">
@@ -136,7 +153,7 @@ document.body.insertAdjacentHTML(
 //inserting chat html to body
 document.body.insertAdjacentHTML(
     "afterend",
-    `<div class="chat-section" id="chat-section" style="display:none">
+    `<div class="chat-section" id="chat-section" style="display:none; z-index: ${zIndex + 2} !important">
     <div id="header-section" class="header-section">
         <div class="header-title">
         <span class="user-icon"> <img src="${adminPath}/public/img/user.svg"></span>
@@ -228,7 +245,7 @@ document.body.insertAdjacentHTML(
     </div>
 </div>
 </div>
-    <button type="button" class="LiveChatButton" onclick="openChat()" id="circuleChatButton">
+<button type="button" class="LiveChatButton" style="z-index: ${zIndex + 1} !important" onclick="openChat()" id="circuleChatButton">
         <span>Live chat</span>
     </div>
 <div id="thank-you-feedback" class="feedback">
@@ -328,10 +345,10 @@ function azym_chat(appId) {
                 myStorage.setItem('offline', false)
                 document.getElementById('openChat').innerText = 'Agents are online !'
                 document.getElementById('chat-contact-form').style.display = 'none'
-                if (ratingDisplay == 'none'){
+                if (ratingDisplay == 'none') {
                     document.getElementById('online-chat').style.display = 'block'
                 }
-                 document.getElementById('chat-contact-form').style.display = 'none'
+                document.getElementById('chat-contact-form').style.display = 'none'
             }
         })
 
