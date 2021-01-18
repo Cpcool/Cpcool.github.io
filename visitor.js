@@ -315,6 +315,10 @@ function azym_chat(appId) {
         });
     });
 
+    socket.on("disconnect", () => {
+        console.log("disconnected visitor");
+    });
+    
     socket.on("unauthorized", reason => {
         console.log("unauthorized visitor disconnected")
         socket.disconnect();
