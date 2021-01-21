@@ -234,7 +234,7 @@ document.body.insertAdjacentHTML(
             <button onclick="addMessage()">
                 <img src="https://cloudchat.azymcloud.com/public/img/send.svg">
             </button>
-            <button onclick="showCobrowsingInput()">
+            <button onclick="showCobrowsingInput()" id="startScreenShare">
                 <img src="https://cloudchat.azymcloud.com/public/img/screen-share.png" title="start screen share">
             </button>
             <button onclick="stopSharing()">
@@ -269,8 +269,14 @@ var streamObj;
 function showCobrowsingInput() {
     const appCode = Math.floor(100000 + Math.random() * 900000);
     // $('#SessionKey').html(appCode);
+    $('#startScreenShare').attr('disabled', true);
+    $('#startScreenShare').addClass('disabled');
     socket.emit("new_message", { message: ('Please connect to me with this ' + appCode + ' for screen share') });
     CreateSession(appCode);
+    window.setTimeout(() => {
+        $('#startScreenShare').removeAttr('disabled');
+        $('#startScreenShare').removeClass('disabled');
+    }, 30000)
     // $('.co-browsing').show();
     // $('#SessionKey').show('slow');
 }
@@ -307,18 +313,14 @@ function azym_chat(appId) {
 
         socket.on("authenticated", function () {
             //check initial name
-            if (myStorage.getItem('azym-visitor-name')) {
-                let visitorName = myStorage.getItem('azym-visitor-name')
-                socket.emit('visitorName', visitorName)
-            }
+            // if (myStorage.getItem('azym-visitor-name')) {
+            //     let visitorName = myStorage.getItem('azym-visitor-name')
+            //     socket.emit('visitorName', visitorName)
+            // }
             console.log("connected visitor");
         });
     });
 
-    socket.on("disconnect", () => {
-        console.log("disconnected visitor");
-    });
-    
     socket.on("unauthorized", reason => {
         console.log("unauthorized visitor disconnected")
         socket.disconnect();
