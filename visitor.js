@@ -283,7 +283,7 @@ function showCobrowsingInput() {
     // $('#SessionKey').show('slow');
 }
 
-document.getElementById('message-box-visitor').addEventListener('keypress', function (e) {
+document.getElementById('message-box-visitor').addEventListener('keydown', function (e) {
     if (!myStorage.getItem('azym-visitor-name')) {
         document.getElementById('azym-visitor-parent').style.display = 'block'
         document.getElementById('message-box-azym').style.display = 'none'
