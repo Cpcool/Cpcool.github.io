@@ -451,7 +451,7 @@ function azym_chat(appId) {
 
 // add message to chat side
 function addMessage() {
-    let message = document.getElementById('message-box-visitor').value
+    let message = document.getElementById('message-box-visitor').value.trim()
     
     console.log('************MESSAGE********************')
     console.log(message)
