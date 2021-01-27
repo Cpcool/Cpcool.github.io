@@ -153,7 +153,7 @@ document.body.insertAdjacentHTML(
 //inserting chat html to body
 document.body.insertAdjacentHTML(
     "afterend",
-    `<div class="chat-section" id="chat-section" style="display:none; z-index: ${zIndex + 2} !important">
+    `<div class="chat-section" id="chat-section" style="display:none; z-index: ${zIndex + 5} !important">
     <div id="header-section" class="header-section">
         <div class="header-title">
         <span class="user-icon"> <img src="${adminPath}/public/img/user.svg"></span>
@@ -167,7 +167,9 @@ document.body.insertAdjacentHTML(
     <div class="co-browsing">
         <p>Share this code with admin <mark id="SessionKey"></mark></p>
     </div>
-    <p id="RemoteStatus">Screen Share Disconnected</p>
+    <p id="RemoteStatus">
+        <span style="display: none">Screen Share Disconnected</span>
+    </p>
 <div class="chat-section-remove" id="chat-section-remove">
 <div id="visitorRating" style="display:none">
     <div class="visitorIcon">
