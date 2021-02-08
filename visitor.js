@@ -303,7 +303,7 @@ function azym_chat(appId) {
     let chatId = myStorage.getItem("chatID");
 
     // initializing socket connection
-    socket = io.connect(socketUrl);
+    socket = io.connect(socketUrl,{transports: ['websocket'], upgrade: false});
     let vName = myStorage.getItem('azym-visitor-name') || "Annonymous";
 
     socket.on("connect", () => {
