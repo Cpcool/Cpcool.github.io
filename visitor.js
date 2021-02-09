@@ -174,7 +174,7 @@ document.body.insertAdjacentHTML(
 <div id="visitorRating" style="display:none">
     <div class="visitorIcon">
     <div class="visitorRatingTitle">
-    <img src="https://storage.googleapis.com/azym_image_upload/avatardefault_92824.png">
+    <img src="https://cloudchat.azymcloud.com/public/img/user.svg">
     <h2 id="rating-text-heading">Please rate your customer service experience :</h2>
 </div>
    <div class="labelIcon">
@@ -307,7 +307,7 @@ function azym_chat(appId) {
     let chatId = myStorage.getItem("chatID");
 
     // initializing socket connection
-    socket = io.connect(socketUrl,{transports: ['websocket'], upgrade: false});
+    socket = io.connect(socketUrl, { transports: ['websocket'], upgrade: false });
     let vName = myStorage.getItem('azym-visitor-name') || "Annonymous";
 
     socket.on("connect", () => {
@@ -334,10 +334,9 @@ function azym_chat(appId) {
 
     if (socket) {
 
-        socket.on('disconnect',()=>{
+        socket.on('disconnect', () => {
             console.log('disconnected');
         })
-                  
         // if all admins are offline
         socket.on('offline_message', data => {
             console.log('offline message is enabled');
@@ -460,11 +459,6 @@ function azym_chat(appId) {
 // add message to chat side
 function addMessage() {
     let message = document.getElementById('message-box-visitor').value.trim()
-    
-    console.log('************MESSAGE********************')
-    console.log(message)
-    console.log('************MESSAGE********************')
-    
     if (message && message !== '') {
         document.getElementById('message-box-visitor').value = '';
         let node = document.getElementById('msgList-client');
@@ -473,7 +467,7 @@ function addMessage() {
                             <span class="messages">${message}</span>
                             </div>
                             <span class="User">
-                <img src="https://storage.googleapis.com/azym_image_upload/avatardefault_92824.png">
+                <img src="https://cloudchat.azymcloud.com/public/img/user.svg">
             </span>
                         </div></li>`;
         socket.emit("new_message", { message: message });
