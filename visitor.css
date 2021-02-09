@@ -607,7 +607,7 @@ button#circuleChatButton {
     text-align: center !important;
     box-shadow: inset 0 0 0 0.21429rem rgb(255 255 255 / 40%);
     position: fixed;
-    bottom: -4px;
+    bottom: 5px;
     right: 95px;
     padding: 10px 40px;
     cursor: pointer;
