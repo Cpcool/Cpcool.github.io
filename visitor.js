@@ -330,6 +330,10 @@ function azym_chat(appId) {
 
     if (socket) {
 
+        socket.on('disconnect',()=>{
+            console.log('disconnected');
+        }
+                  
         // if all admins are offline
         socket.on('offline_message', data => {
             console.log('offline message is enabled');
