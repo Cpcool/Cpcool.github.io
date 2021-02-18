@@ -336,7 +336,7 @@ function azym_chat(appId) {
     });
 
     socket.on("departments-list", (values) => {
-        values = values.map(value => value.department)
+       // values = values.map(value => value.department)
         var select = document.getElementById('departments')
         if (select.options.length === 1) {
             for (const val of values) {
