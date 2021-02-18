@@ -8,6 +8,7 @@ let socialOpen = false;
 let adminShowing = false;
 let activeSocialType = '';
 let adminSocialInfo = {};
+let siteColor = '#e31f1f'
 let connectTypes = {
     email: "mailto:",
     whatsapp: "https://wa.me/",
@@ -33,6 +34,16 @@ let socialImages = {
     telegram: "telegram.svg"
 }
 let zIndex = 1;
+
+window.addEventListener('DOMContentLoaded', function () {
+    const listOfElement = ['*'];
+    listOfElement.forEach(ele => {
+        zIndex = findHighestZIndex(ele, zIndex)
+    })
+    $('#circuleChatButton').css('z-index', (zIndex + 2))
+    $('#chat-section').css('z-index', (zIndex + 5))
+    $('#social-share-azym').css('z-index', (zIndex + 4))
+});
 
 function findHighestZIndex(elem, zIndexValue) {
     var elems = document.getElementsByTagName(elem);
@@ -155,10 +166,9 @@ document.body.insertAdjacentHTML(
     "afterend",
     `<div class="chat-section" id="chat-section" style="display:none; z-index: ${zIndex + 5} !important">
     <div id="header-section" class="header-section">
-        <div class="header-title">
-        <span class="user-icon"> <img src="${adminPath}/public/img/user.svg"></span>
-        <span id="openChat">Agents are online!</span>
-    </div>
+        <div class="header-title">        
+			<span id="openChat">Chat with us</span>
+		</div>
     <div class="minus-close">
     <img onclick='minimizeChat()' src="${adminPath}/public/img/minus.svg">
     <img onclick='closeChat()' src="${adminPath}/public/img/Close.svg">
@@ -197,9 +207,12 @@ document.body.insertAdjacentHTML(
 </div>
     </div>
     <div class="contact-form" id="chat-contact-form">
-    <span id="sucess-msg-azym"><span>
+    <p id="response-msg-azym"></p>
     <input type="text" id="nameOff" name="text" autocomplete="text" placeholder="Your name*">
     <input type="email" id="emailOff" name="email" autocomplete="email" placeholder="Your email*">
+    <select name="departments" id="departments">
+    <option value="">Choose department</option>
+    </select>
     <input type="text" id="subjectOff" name="subject" autocomplete="subject" placeholder="Subject*">
     <textarea maxlength="1000" id="messageOff" placeholder="Your message*"></textarea>
     <a href="#" onclick='sendOfflineMessage()'>Send Message</a>
@@ -247,7 +260,7 @@ document.body.insertAdjacentHTML(
     </div>
 </div>
 </div>
-<button type="button" class="'" style="z-index: ${zIndex + 1} !important" onclick="openChat()" id="circuleChatButton">
+<button type="button" class="'" style="z-index: ${zIndex + 2} !important" onclick="openChat()" id="circuleChatButton">
         <span>
             <svg id="Layer_1" x="0" y="0" viewBox="0 0 15 16" xml:space="preserve" aria-hidden="true" style="
     width: 30px;
@@ -307,7 +320,7 @@ function azym_chat(appId) {
     let chatId = myStorage.getItem("chatID");
 
     // initializing socket connection
-    socket = io.connect(socketUrl, { transports: ['websocket'], upgrade: false });
+    socket = io.connect(socketUrl, { autoConnect: true, transports: ['websocket'], upgrade: false });
     let vName = myStorage.getItem('azym-visitor-name') || "Annonymous";
 
     socket.on("connect", () => {
@@ -316,122 +329,130 @@ function azym_chat(appId) {
             chatId: chatId,
             visitorName: vName
         });
-
-        socket.on("authenticated", function () {
-            //check initial name
-            // if (myStorage.getItem('azym-visitor-name')) {
-            //     let visitorName = myStorage.getItem('azym-visitor-name')
-            //     socket.emit('visitorName', visitorName)
-            // }
-            console.log("connected visitor");
-        });
     });
+
+    socket.on("authenticated", function () {
+        console.log("connected visitor auth");
+    });
+
+    socket.on("departments-list", (values) => {
+        values = values.map(value => value.department)
+        var select = document.getElementById('departments')
+        if (select.options.length === 1) {
+            for (const val of values) {
+                var option = document.createElement("option");
+                option.value = val;
+                option.text = val;
+                select.appendChild(option);
+            }
+        }
+    })
 
     socket.on("unauthorized", reason => {
         console.log("unauthorized visitor disconnected")
         socket.disconnect();
     });
 
-    if (socket) {
+    socket.on('disconnect', () => {
+        console.log('disconnected');
+    })
 
-        socket.on('disconnect', () => {
-            console.log('disconnected');
-        })
-        // if all admins are offline
-        socket.on('offline_message', data => {
-            console.log('offline message is enabled');
+    // if all admins are offline
+    socket.on('offline_message', data => {
+        console.log('offline message is enabled');
+        myStorage.setItem('offline', true)
+        document.getElementById('openChat').innerText = 'Agents are offline !'
+        document.getElementById('chat-contact-form').style.display = 'block'
+        document.getElementById('online-chat').style.display = 'none'
+    })
+
+    // //status change event for offline and online
+    socket.on('statusChange', (status) => {
+        let ratingDisplay = document.getElementById('visitorRating').style.display
+        console.log('admin status changing', status, ratingDisplay);
+        if (status) {
             myStorage.setItem('offline', true)
             document.getElementById('openChat').innerText = 'Agents are offline !'
-            document.getElementById('chat-contact-form').style.display = 'block'
+            if (ratingDisplay == 'none')
+                document.getElementById('chat-contact-form').style.display = 'block'
             document.getElementById('online-chat').style.display = 'none'
-        })
-
-        // //status change event for offline and online
-        socket.on('statusChange', (status) => {
-            let ratingDisplay = document.getElementById('visitorRating').style.display
-            console.log('admin status changing', status, ratingDisplay);
-            if (status) {
-                myStorage.setItem('offline', true)
-                document.getElementById('openChat').innerText = 'Agents are offline !'
-                if (ratingDisplay == 'none')
-                    document.getElementById('chat-contact-form').style.display = 'block'
-                document.getElementById('online-chat').style.display = 'none'
-            } else {
-                myStorage.setItem('offline', false)
-                document.getElementById('openChat').innerText = 'Agents are online !'
-                document.getElementById('chat-contact-form').style.display = 'none'
-                if (ratingDisplay == 'none') {
-                    document.getElementById('online-chat').style.display = 'block'
-                }
-                document.getElementById('chat-contact-form').style.display = 'none'
+        } else {
+            myStorage.setItem('offline', false)
+            document.getElementById('openChat').innerText = 'Agents are online !'
+            document.getElementById('chat-contact-form').style.display = 'none'
+            if (ratingDisplay == 'none') {
+                document.getElementById('online-chat').style.display = 'block'
             }
-        })
+            document.getElementById('chat-contact-form').style.display = 'none'
+        }
+    })
 
-        //site-admins
-        socket.on('site-admins', (adminInfo) => {
-            console.log("admin info is here =>", adminInfo)
-            adminSocialInfo = JSON.parse(JSON.stringify(adminInfo))
-            if (Object.keys(adminInfo).length === 0) {
-                document.getElementById('social-circle-chat').style.display = 'none'
+    //site-admins
+    socket.on('site-admins', (adminInfo) => {
+        console.log("admin info is here =>", adminInfo)
+        adminSocialInfo = JSON.parse(JSON.stringify(adminInfo))
+        if (Object.keys(adminInfo).length === 0) {
+            document.getElementById('social-circle-chat').style.display = 'none'
+        }
+        else {
+            let temp = {
+                email: 0,
+                whatsapp: 0,
+                snapchat: 0,
+                phone: 0,
+                messenger: 0,
+                telegram: 0
             }
-            else {
-                let temp = {
-                    email: 0,
-                    whatsapp: 0,
-                    snapchat: 0,
-                    phone: 0,
-                    messenger: 0,
-                    telegram: 0
-                }
-                if (adminInfo['isAllowWhatsapp'])
-                    temp['whatsapp'] = 1
-                if (adminInfo['isAllowEmail'])
-                    temp['email'] = 1
-                if (adminInfo['isAllowPhone'])
-                    temp['phone'] = 1
-                if (adminInfo['isAllowSnapchat'])
-                    temp['snapchat'] = 1
-                if (adminInfo['isAllowTelegram'])
-                    temp['telegram'] = 1
-                if (adminInfo['isAllowMessenger'])
-                    temp['messenger'] = 1
+            if (adminInfo['isAllowWhatsapp'])
+                temp['whatsapp'] = 1
+            if (adminInfo['isAllowEmail'])
+                temp['email'] = 1
+            if (adminInfo['isAllowPhone'])
+                temp['phone'] = 1
+            if (adminInfo['isAllowSnapchat'])
+                temp['snapchat'] = 1
+            if (adminInfo['isAllowTelegram'])
+                temp['telegram'] = 1
+            if (adminInfo['isAllowMessenger'])
+                temp['messenger'] = 1
 
-                for (let key of Object.keys(temp)) {
-                    if (!temp[key]) {
-                        document.getElementById(`${key}-azym`).style.display = 'none'
-                    }
+            for (let key of Object.keys(temp)) {
+                if (!temp[key]) {
+                    document.getElementById(`${key}-azym`).style.display = 'none'
                 }
             }
-        })
+        }
+    })
 
-        // color change events
-        socket.on('chatColorChange', (colorCode) => {
-            console.log('color change event called ', colorCode);
-            // change color of visitor's chat
-            myStorage.setItem('color', colorCode)
-            if (colorCode)
-                chatColorChange(colorCode)
-        })
+    // color change events
+    socket.on('chatColorChange', (colorCode) => {
+        siteColor = colorCode
+        console.log('color change event called ', colorCode);
+        // change color of visitor's chat
+        myStorage.setItem('color', colorCode)
+        if (colorCode)
+            chatColorChange(colorCode)
+    })
 
-        socket.on('stop_screenShare', (data) => {
-            console.log('stop screen share called');
-            stopSharing();
-        });
+    socket.on('stop_screenShare', (data) => {
+        console.log('stop screen share called');
+        stopSharing();
+    });
 
-        socket.on('start_screenShare', (data) => {
-            console.log('start screen share called');
-            startScreenShare();
-        });
+    socket.on('start_screenShare', (data) => {
+        console.log('start screen share called');
+        startScreenShare();
+    });
 
-        // New message events
-        socket.on("new_message", data => {
-            console.log('new message arrived ', data);
-            let node = document.getElementById('msgList-client');
-            if (data.role == "visitor") {
-                addMessage(data.message)
-            } else {
-                let adminImage = bucketPath + '/' + data.image;
-                node.innerHTML += `<li><div class="chat-admin">
+    // New message events
+    socket.on("new_message", data => {
+        console.log('new message arrived ', data);
+        let node = document.getElementById('msgList-client');
+        if (data.role == "visitor") {
+            addMessage(data.message)
+        } else {
+            let adminImage = bucketPath + '/' + data.image;
+            node.innerHTML += `<li><div class="chat-admin">
                     <span class="User">
                         <img src="${adminImage}" onerror="this.onerror=null; this.src='https://cloudchat.azymcloud.com/public/img/user.svg'" >
                     </span>
@@ -444,16 +465,15 @@ function azym_chat(appId) {
                         </div>
                     </div>
                     </div></li>`
-            }
-            openChat();
-            animateMessageDiv();
+        }
+        openChat();
+        animateMessageDiv();
 
-            // saving chat history to localstorage
-            let history = JSON.parse(myStorage.getItem("history"));
-            history["chat"].push({ admin: data.message });
-            myStorage.setItem("history", JSON.stringify(history));
-        });
-    }
+        // saving chat history to localstorage
+        let history = JSON.parse(myStorage.getItem("history"));
+        history["chat"].push({ admin: data.message });
+        myStorage.setItem("history", JSON.stringify(history));
+    });
 }
 
 // add message to chat side
@@ -471,6 +491,9 @@ function addMessage() {
             </span>
                         </div></li>`;
         socket.emit("new_message", { message: message });
+        let all = document.getElementsByClassName('messages');
+        let len = all.length
+        all[len - 1].style.setProperty("background-color", siteColor, "important")
         animateMessageDiv();
     }
 }
@@ -490,9 +513,13 @@ document.getElementById('message-box-visitor').addEventListener('keyup', functio
 });
 
 // method for changing chat color
-function chatColorChange(color = '#EEA849') {
-    document.getElementsByClassName('circleChatButtonWrap')[0].style.background = color
-    document.getElementsByClassName('chat-section')[0].style.background = color
+function chatColorChange(color = '#e31f1f') {
+    document.getElementsByClassName('header-section')[0].style.background = color
+    document.querySelector('.contact-form > a').style.backgroundColor = color
+    let all = document.getElementsByClassName('messages');
+    for (let i = 0; i < all.length; i++) {
+        all[i].style.setProperty("background-color", color, "important")
+    }
 }
 
 // crreating unique chatId randomly
@@ -526,30 +553,38 @@ function visitorName() {
 //******************************************************************
 
 async function sendOfflineMessage() {
-    console.log('sending offline message to admins');
+    let department = document.getElementById('departments').value
+    let msgElement = document.getElementById('response-msg-azym')
+    console.log('sending offline message to admins', department);
     let name = document.getElementById('nameOff').value || 'annoymous'
     let subject = document.getElementById('subjectOff').value
     let message = document.getElementById('messageOff').value
     let email = document.getElementById('emailOff').value
     let id = myStorage.getItem('id')
-    if (name && subject && message && email && id) {
+    if (name && subject && message && email && id && department) {
         const rawResponse = await fetch(`${socketUrl}/api/send/mail`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, subject, message, email, id })
+            body: JSON.stringify({ name, subject, message, email, id, department })
         });
         const content = await rawResponse.json();
         name = document.getElementById('nameOff').value = ''
         subject = document.getElementById('subjectOff').value = ''
         message = document.getElementById('messageOff').value = ''
         email = document.getElementById('emailOff').value = ''
-        console.log(content);
+        msgElement.innerHTML = 'feedback has been sent successfully !'
+        msgElement.style.color = 'green'
+        //console.log(content);
     } else {
+        msgElement.innerHTML = 'please fill all mandatory information below !'
+        msgElement.style.color = 'red'
         console.error('complete your form first !')
     }
+    msgElement.style.display = 'block'
+    setTimeout(() => msgElement.style.display = 'none', 3000)
 }
 
 //******************************************************************
@@ -643,7 +678,10 @@ document.getElementById('openChat').addEventListener('click', openChat)
 //check initial color and change
 if (myStorage.getItem('color')) {
     let color = myStorage.getItem('color')
-    chatColorChange(color)
+    if (color !== '') {
+        siteColor = color
+        chatColorChange(color)
+    }
 }
 
 // add events for visitor ratings emoji's
@@ -676,12 +714,9 @@ function offline_box() {
     document.getElementById('online-chat').style.display = 'none'
 }
 $(document).on('click', ".close-detailbox", function () {
-    // alert(1)
     $("#azym-admin-list").fadeOut("slow");
 })
 function azym_open_social() {
-    console.log('calling onclickkkkk');
-    // alert(1)
     if (socialOpen) {
         $("#azym-social-icons").slideToggle("slow");
         $(this).addClass("social-open");
