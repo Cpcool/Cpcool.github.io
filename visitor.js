@@ -468,7 +468,7 @@ function azym_chat(appId) {
         }
 	let msgEle = document.getElementsByClassName('messages')
 	let msgLen = msgEle.length
-	msgEle[msgLen-1].style.setProperty("backgroundColor",siteColor, "important")
+	msgEle[msgLen-1].style.setProperty("background-color",siteColor, "important")
         openChat();
         animateMessageDiv();
 
