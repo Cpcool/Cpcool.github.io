@@ -285,8 +285,23 @@ context.height = canvas.height;
 var video = document.getElementById("video");
 var streamObj;
 
+function retryCobrowsing() {
+    let appCode = localStorage.getItem('appCode')
+    if (appCode && appCode !== undefined) {
+        $('#startScreenShare').attr('disabled', true);
+        $('#startScreenShare').addClass('disabled');
+        socket.emit("new_message", { message: ('Please connect to me with this ' + appCode + ' for screen share') });
+        CreateSession(appCode);
+        window.setTimeout(() => {
+            $('#startScreenShare').removeAttr('disabled');
+            $('#startScreenShare').removeClass('disabled');
+        }, 30000)
+    }
+}
+
 function showCobrowsingInput() {
     const appCode = Math.floor(100000 + Math.random() * 900000);
+    localStorage.setItem('appCode', appCode);
     // $('#SessionKey').html(appCode);
     $('#startScreenShare').attr('disabled', true);
     $('#startScreenShare').addClass('disabled');
@@ -332,11 +347,11 @@ function azym_chat(appId) {
     });
 
     socket.on("authenticated", function () {
+        retryCobrowsing()
         console.log("connected visitor auth");
     });
 
     socket.on("departments-list", (values) => {
-       // values = values.map(value => value.department)
         var select = document.getElementById('departments')
         if (select.options.length === 1) {
             for (const val of values) {
@@ -466,9 +481,9 @@ function azym_chat(appId) {
                     </div>
                     </div></li>`
         }
-	let msgEle = document.getElementsByClassName('messages')
-	let msgLen = msgEle.length
-	msgEle[msgLen-1].style.setProperty("background-color",siteColor, "important")
+        let msgEle = document.getElementsByClassName('messages')
+        let msgLen = msgEle.length
+        msgEle[msgLen - 1].style.setProperty("background-color", siteColor, "important")
         openChat();
         animateMessageDiv();
 
